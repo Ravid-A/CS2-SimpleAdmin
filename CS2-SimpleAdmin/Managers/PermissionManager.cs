@@ -530,7 +530,7 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
                 immunity,
                 ends = futureTime,
                 created = now,
-                serverid = globalAdmin ? null : CS2_SimpleAdmin.ServerId
+                isGlobal = globalAdmin ? 1 : 0
             });
 
             // Insert flags into sa_admins_flags table
@@ -560,6 +560,18 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
                 {
                     adminId,
                     flag
+                });
+            }
+
+            // Global admins apply to every server and need no per-server link row.
+            // Server-specific admins are linked to the current server.
+            if (!globalAdmin)
+            {
+                var insertAdminServerSql = databaseProvider.GetAddAdminServerQuery();
+                await connection.ExecuteAsync(insertAdminServerSql, new
+                {
+                    adminId,
+                    server_id = CS2_SimpleAdmin.ServerId
                 });
             }
 
@@ -663,6 +675,26 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
         catch (Exception)
         {
             CS2_SimpleAdmin._logger?.LogCritical("Unable to remove expired admins");
+        }
+    }
+
+    /// <summary>
+    /// Deletes orphaned admins that are not global and have no server assignments left.
+    /// </summary>
+    public async Task DeleteOrphanedAdmins()
+    {
+        if (databaseProvider == null) return;
+
+        try
+        {
+            await using var connection = await databaseProvider.CreateConnectionAsync();
+
+            var sql = databaseProvider.GetDeleteOrphanedAdminsQuery();
+            await connection.ExecuteAsync(sql);
+        }
+        catch (Exception)
+        {
+            CS2_SimpleAdmin._logger?.LogCritical("Unable to remove orphaned admins");
         }
     }
 }

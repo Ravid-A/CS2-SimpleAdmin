@@ -127,7 +127,10 @@ public class MySqlDatabaseProvider(string connectionString) : IDatabaseProvider
                FROM sa_admins_flags
                JOIN sa_admins ON sa_admins_flags.admin_id = sa_admins.id
                WHERE (sa_admins.ends IS NULL OR sa_admins.ends > @CurrentTime)
-               AND (sa_admins.server_id IS NULL OR sa_admins.server_id = @serverid)
+               AND (sa_admins.`global` = 1
+                    OR EXISTS (SELECT 1 FROM sa_admins_servers
+                               WHERE sa_admins_servers.admin_id = sa_admins.id
+                               AND sa_admins_servers.server_id = @serverid))
                ORDER BY sa_admins.player_steamid
                """;
     }
@@ -135,11 +138,14 @@ public class MySqlDatabaseProvider(string connectionString) : IDatabaseProvider
     public string GetDeleteAdminQuery(bool globalDelete) =>
         globalDelete
             ? "DELETE FROM sa_admins WHERE player_steamid = @PlayerSteamID"
-            : "DELETE FROM sa_admins WHERE player_steamid = @PlayerSteamID AND server_id = @ServerId";
-    
+            : "DELETE FROM sa_admins_servers WHERE server_id = @ServerId AND admin_id IN (SELECT id FROM sa_admins WHERE player_steamid = @PlayerSteamID)";
+
     public string GetAddAdminQuery() =>
-        "INSERT INTO sa_admins (player_steamid, player_name, immunity, ends, created, server_id) " +
-        "VALUES (@playerSteamId, @playerName, @immunity, @ends, @created, @serverid); SELECT LAST_INSERT_ID();";
+        "INSERT INTO sa_admins (player_steamid, player_name, immunity, ends, created, `global`) " +
+        "VALUES (@playerSteamId, @playerName, @immunity, @ends, @created, @isGlobal); SELECT LAST_INSERT_ID();";
+
+    public string GetAddAdminServerQuery() =>
+        "INSERT INTO sa_admins_servers (admin_id, server_id) VALUES (@adminId, @server_id);";
 
     public string GetGroupsQuery()
     {
@@ -181,6 +187,9 @@ public class MySqlDatabaseProvider(string connectionString) : IDatabaseProvider
 
     public string GetDeleteOldAdminsQuery() =>
         "DELETE FROM sa_admins WHERE ends IS NOT NULL AND ends <= @CurrentTime;";
+
+    public string GetDeleteOrphanedAdminsQuery() =>
+        "DELETE FROM sa_admins WHERE `global` = 0 AND id NOT IN (SELECT admin_id FROM sa_admins_servers);";
     
     public string GetAddBanQuery()
     {
