@@ -75,7 +75,7 @@ The configuration file (`CS2-SimpleAdmin.json`) will be auto-generated after the
 ## 📚 Documentation & Support
 
 Access full documentation, guides, tutorials, and developer API references here:  
-[CS2-SimpleAdmin Wiki](https://cs2-simpleadmin.daffyy.dev)
+[CS2-SimpleAdmin Wiki](https://ravid-a.github.io/CS2-SimpleAdmin/)
 
 ---
 
