@@ -123,26 +123,24 @@ public class MySqlDatabaseProvider(string connectionString) : IDatabaseProvider
     public string GetAdminsQuery()
     {
         return """
-               SELECT sa_admins.player_steamid, sa_admins.player_name, sa_admins_flags.flag, sa_admins.immunity, sa_admins.ends
-               FROM sa_admins_flags
-               JOIN sa_admins ON sa_admins_flags.admin_id = sa_admins.id
-               WHERE (sa_admins.ends IS NULL OR sa_admins.ends > @CurrentTime)
-               AND (sa_admins.`global` = 1
-                    OR EXISTS (SELECT 1 FROM sa_admins_servers
-                               WHERE sa_admins_servers.admin_id = sa_admins.id
-                               AND sa_admins_servers.server_id = @serverid))
-               ORDER BY sa_admins.player_steamid
+               SELECT a.player_steamid, a.player_name, f.flag, a.immunity, a.ends
+               FROM sa_admins_flags f
+               JOIN sa_admins a ON f.admin_id = a.id
+               LEFT JOIN sa_admins_servers ag ON a.id = ag.admin_id
+               WHERE (a.ends IS NULL OR a.ends > @CurrentTime)
+               AND (ag.server_id = @serverid OR a.server_id IS NULL)
+               ORDER BY a.player_steamid
                """;
     }
     
     public string GetDeleteAdminQuery(bool globalDelete) =>
         globalDelete
             ? "DELETE FROM sa_admins WHERE player_steamid = @PlayerSteamID"
-            : "DELETE FROM sa_admins_servers WHERE server_id = @ServerId AND admin_id IN (SELECT id FROM sa_admins WHERE player_steamid = @PlayerSteamID)";
-
+            : "DELETE FROM sa_admins WHERE player_steamid = @PlayerSteamID AND server_id = @ServerId";
+    
     public string GetAddAdminQuery() =>
-        "INSERT INTO sa_admins (player_steamid, player_name, immunity, ends, created, `global`) " +
-        "VALUES (@playerSteamId, @playerName, @immunity, @ends, @created, @isGlobal); SELECT LAST_INSERT_ID();";
+        "INSERT INTO sa_admins (player_steamid, player_name, immunity, ends, created) " +
+        "VALUES (@playerSteamId, @playerName, @immunity, @ends, @created); SELECT LAST_INSERT_ID();";
 
     public string GetAddAdminServerQuery() =>
         "INSERT INTO sa_admins_servers (admin_id, server_id) VALUES (@adminId, @server_id);";
@@ -187,9 +185,6 @@ public class MySqlDatabaseProvider(string connectionString) : IDatabaseProvider
 
     public string GetDeleteOldAdminsQuery() =>
         "DELETE FROM sa_admins WHERE ends IS NOT NULL AND ends <= @CurrentTime;";
-
-    public string GetDeleteOrphanedAdminsQuery() =>
-        "DELETE FROM sa_admins WHERE `global` = 0 AND id NOT IN (SELECT admin_id FROM sa_admins_servers);";
     
     public string GetAddBanQuery()
     {

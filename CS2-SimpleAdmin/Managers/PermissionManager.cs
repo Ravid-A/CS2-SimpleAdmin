@@ -529,8 +529,7 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
                 playerName,
                 immunity,
                 ends = futureTime,
-                created = now,
-                isGlobal = globalAdmin ? 1 : 0
+                created = now
             });
 
             // Insert flags into sa_admins_flags table
@@ -675,26 +674,6 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
         catch (Exception)
         {
             CS2_SimpleAdmin._logger?.LogCritical("Unable to remove expired admins");
-        }
-    }
-
-    /// <summary>
-    /// Deletes orphaned admins that are not global and have no server assignments left.
-    /// </summary>
-    public async Task DeleteOrphanedAdmins()
-    {
-        if (databaseProvider == null) return;
-
-        try
-        {
-            await using var connection = await databaseProvider.CreateConnectionAsync();
-
-            var sql = databaseProvider.GetDeleteOrphanedAdminsQuery();
-            await connection.ExecuteAsync(sql);
-        }
-        catch (Exception)
-        {
-            CS2_SimpleAdmin._logger?.LogCritical("Unable to remove orphaned admins");
         }
     }
 }
