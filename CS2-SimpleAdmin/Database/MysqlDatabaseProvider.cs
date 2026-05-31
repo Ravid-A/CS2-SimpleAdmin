@@ -148,11 +148,9 @@ public class MySqlDatabaseProvider(string connectionString) : IDatabaseProvider
     public string GetGroupsQuery()
     {
         return """
-               SELECT g.group_id, sg.name AS group_name, sg.immunity, f.flag
+               SELECT sg.id AS group_id, sg.name AS group_name, sg.immunity, f.flag
                FROM sa_groups_flags f
-               JOIN sa_groups_servers g ON f.group_id = g.group_id
-               JOIN sa_groups sg ON sg.id = g.group_id
-               WHERE (g.server_id = @serverid OR server_id IS NULL)
+               JOIN sa_groups sg ON sg.id = f.group_id
                """;
     }
 
@@ -166,19 +164,10 @@ public class MySqlDatabaseProvider(string connectionString) : IDatabaseProvider
         "INSERT INTO sa_groups (name, immunity) VALUES (@groupName, @immunity); SELECT LAST_INSERT_ID();";
     
     public string GetGroupIdByNameQuery() =>
-        """
-        SELECT sgs.group_id
-                  FROM sa_groups_servers sgs
-                  JOIN sa_groups sg ON sgs.group_id = sg.id
-                  WHERE sg.name = @groupName
-                  ORDER BY (sgs.server_id = @serverId) DESC, sgs.server_id ASC
-                  LIMIT 1;
-        """;
+        "SELECT id FROM sa_groups WHERE name = @groupName LIMIT 1;";
+
     public string GetAddGroupFlagsQuery() =>
         "INSERT INTO sa_groups_flags (group_id, flag) VALUES (@groupId, @flag);";
-
-    public string GetAddGroupServerQuery() =>
-        "INSERT INTO sa_groups_servers (group_id, server_id) VALUES (@groupId, @server_id);";
 
     public string GetDeleteGroupQuery() =>
         "DELETE FROM sa_groups WHERE name = @groupName;";

@@ -381,9 +381,8 @@ public partial class CS2_SimpleAdmin
         var groupName = command.GetArg(1);
         var flags = command.GetArg(2);
         int.TryParse(command.GetArg(3), out var immunity);
-        var globalGroup = command.GetArg(4).ToLower().Equals("-g");
 
-        AddGroup(caller, groupName, flags, immunity, globalGroup, command);
+        AddGroup(caller, groupName, flags, immunity, command);
     }
 
     /// <summary>
@@ -393,14 +392,13 @@ public partial class CS2_SimpleAdmin
     /// <param name="name">Group name (prefix with #).</param>
     /// <param name="flags">Comma-separated flags/groups string.</param>
     /// <param name="immunity">Immunity level.</param>
-    /// <param name="globalGroup">Whether group is global.</param>
     /// <param name="command">Optional command info.</param>
-    private static void AddGroup(CCSPlayerController? caller, string name, string flags, int immunity, bool globalGroup, CommandInfo? command = null)
+    private static void AddGroup(CCSPlayerController? caller, string name, string flags, int immunity, CommandInfo? command = null)
     {
         if (DatabaseProvider == null) return;
 
         var flagsList = flags.Split(',').Select(flag => flag.Trim()).ToList();
-        _ = Instance.PermissionManager.AddGroup(name, flagsList, immunity, globalGroup);
+        _ = Instance.PermissionManager.AddGroup(name, flagsList, immunity);
 
         Helper.LogCommand(caller, $"css_addgroup {name} {flags} {immunity}");
 

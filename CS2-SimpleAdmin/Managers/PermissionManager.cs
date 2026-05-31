@@ -196,11 +196,8 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
 	    ;
         try
         {
-            // var sql = "SELECT group_id FROM sa_groups_servers WHERE (server_id = @serverid OR server_id IS NULL)";
-            // var groupDataSql = connection.Query<int>(sql, new { serverid = CS2_SimpleAdmin.ServerId }).ToList();
-
             var sql = databaseProvider.GetGroupsQuery();
-            var groupData = connection.Query(sql, new { serverid = CS2_SimpleAdmin.ServerId }).ToList();
+            var groupData = connection.Query(sql).ToList();
             if (groupData.Count == 0)
             {
                 return [];
@@ -591,8 +588,7 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
     /// <param name="groupName">Name of the group.</param>
     /// <param name="flagsList">List of flags assigned to the group.</param>
     /// <param name="immunity">Immunity level of the group.</param>
-    /// <param name="globalGroup">Whether the group is global or server-specific.</param>
-    public async Task AddGroup(string groupName, List<string> flagsList, int immunity = 0, bool globalGroup = false)
+    public async Task AddGroup(string groupName, List<string> flagsList, int immunity = 0)
     {
 	    if (databaseProvider == null) return;
 
@@ -621,8 +617,6 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
                 });
             }
 
-            var insertGroupServer = databaseProvider.GetAddGroupServerQuery();
-            await connection.ExecuteAsync(insertGroupServer, new { groupId, server_id = globalGroup ? null : CS2_SimpleAdmin.ServerId });
             await Server.NextWorldUpdateAsync(() =>
             {
                 CS2_SimpleAdmin.Instance.ReloadAdmins(null);

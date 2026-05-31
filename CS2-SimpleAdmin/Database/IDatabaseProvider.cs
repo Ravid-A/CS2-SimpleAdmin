@@ -27,7 +27,6 @@ public interface IDatabaseProvider
     string GetGroupIdByNameQuery();
     string GetAddGroupQuery();
     string GetAddGroupFlagsQuery();
-    string GetAddGroupServerQuery();
     string GetDeleteGroupQuery();
     string GetDeleteOldAdminsQuery();
     
