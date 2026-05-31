@@ -530,7 +530,7 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
                 immunity,
                 ends = futureTime,
                 created = now,
-                serverid = globalAdmin ? null : CS2_SimpleAdmin.ServerId
+                isGlobal = globalAdmin ? 1 : 0
             });
 
             // Insert flags into sa_admins_flags table
@@ -560,6 +560,18 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
                 {
                     adminId,
                     flag
+                });
+            }
+
+            // Global admins apply to every server and need no per-server link row.
+            // Server-specific admins are linked to the current server.
+            if (!globalAdmin)
+            {
+                var insertAdminServerSql = databaseProvider.GetAddAdminServerQuery();
+                await connection.ExecuteAsync(insertAdminServerSql, new
+                {
+                    adminId,
+                    server_id = CS2_SimpleAdmin.ServerId
                 });
             }
 

@@ -21,6 +21,7 @@ public interface IDatabaseProvider
     string GetDeleteAdminQuery(bool globalDelete);
     string GetAddAdminQuery();
     string GetAddAdminFlagsQuery();
+    string GetAddAdminServerQuery();
     string GetUpdateAdminGroupQuery();
     string GetGroupsQuery();
     string GetGroupIdByNameQuery();

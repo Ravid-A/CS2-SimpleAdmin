@@ -84,6 +84,9 @@
 	<None Update="Database\Migrations\Mysql\016_OptimizeTablesAndIndexes.sql">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
+	<None Update="Database\Migrations\Mysql\017_CreateAdminsServersTable.sql">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
 	<None Update="Database\Migrations\Sqlite\001_CreateTables.sql">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
@@ -130,6 +133,9 @@
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
 	<None Update="Database\Migrations\Sqlite\016_OptimizeTablesAndIndexes.sql">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="Database\Migrations\Sqlite\017_CreateAdminsServersTable.sql">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
 </ItemGroup>
