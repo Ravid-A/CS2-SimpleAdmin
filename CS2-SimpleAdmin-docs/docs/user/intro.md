@@ -6,6 +6,10 @@ sidebar_position: 1
 
 Welcome to **CS2-SimpleAdmin** - a comprehensive administration plugin for Counter-Strike 2 servers built with C# (.NET 8.0) for CounterStrikeSharp.
 
+:::note Continued maintenance
+This is a community-maintained continuation of the original [daffyyyy/CS2-SimpleAdmin](https://github.com/daffyyyy/CS2-SimpleAdmin), which is no longer actively maintained by its original author. This fork carries on development with bug fixes, new features, and ongoing support. Contributions are welcome!
+:::
+
 ## What is CS2-SimpleAdmin?
 
 CS2-SimpleAdmin is a powerful server administration tool that provides comprehensive features for managing your Counter-Strike 2 server. It offers:

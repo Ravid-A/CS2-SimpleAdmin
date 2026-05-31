@@ -20,15 +20,17 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://cs2-simpleadmin.daffyy.dev',
+  url: 'https://ravid-a.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/CS2-SimpleAdmin/',
+  trailingSlash: false,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'daffyyyy', // Usually your GitHub org/user name.
+  organizationName: 'Ravid-A', // Usually your GitHub org/user name.
   projectName: 'CS2-SimpleAdmin', // Usually your repo name.
+  deploymentBranch: 'gh-pages',
 
   onBrokenLinks: 'throw',
 
@@ -68,16 +70,16 @@ const config = {
       metadata: [
         {name: 'keywords', content: 'CS2, Counter-Strike 2, admin plugin, server management, bans, mutes, CounterStrikeSharp'},
         {name: 'description', content: 'Comprehensive administration plugin for Counter-Strike 2 servers with ban management, multi-server support, and extensible API'},
-        {name: 'author', content: 'daffyyyy'},
+        {name: 'author', content: 'Ravid-A'},
         {property: 'og:title', content: 'CS2-SimpleAdmin - Admin Plugin for Counter-Strike 2'},
         {property: 'og:description', content: 'Comprehensive administration plugin for CS2 servers. Manage bans, mutes, warnings, and permissions with multi-server support.'},
         {property: 'og:type', content: 'website'},
-        {property: 'og:url', content: 'https://cs2-simpleadmin.daffyy.dev'},
-        {property: 'og:image', content: 'https://cs2-simpleadmin.daffyy.dev/img/docusaurus-social-card.jpg'},
+        {property: 'og:url', content: 'https://ravid-a.github.io/CS2-SimpleAdmin/'},
+        {property: 'og:image', content: 'https://ravid-a.github.io/CS2-SimpleAdmin/img/docusaurus-social-card.jpg'},
         {name: 'twitter:card', content: 'summary_large_image'},
         {name: 'twitter:title', content: 'CS2-SimpleAdmin - Admin Plugin for Counter-Strike 2'},
         {name: 'twitter:description', content: 'Comprehensive administration plugin for CS2 servers with ban management and multi-server support.'},
-        {name: 'twitter:image', content: 'https://cs2-simpleadmin.daffyy.dev/img/docusaurus-social-card.jpg'},
+        {name: 'twitter:image', content: 'https://ravid-a.github.io/CS2-SimpleAdmin/img/docusaurus-social-card.jpg'},
       ],
       colorMode: {
         respectPrefersColorScheme: true,
@@ -108,7 +110,7 @@ const config = {
             label: 'Developer',
           },
           {
-            href: 'https://github.com/daffyyyy/CS2-SimpleAdmin',
+            href: 'https://github.com/Ravid-A/CS2-SimpleAdmin',
             label: 'GitHub',
             position: 'right',
           },
@@ -139,11 +141,11 @@ const config = {
             items: [
               {
                 label: 'GitHub Issues',
-                href: 'https://github.com/daffyyyy/CS2-SimpleAdmin/issues',
+                href: 'https://github.com/Ravid-A/CS2-SimpleAdmin/issues',
               },
               {
                 label: 'GitHub Discussions',
-                href: 'https://github.com/daffyyyy/CS2-SimpleAdmin/discussions',
+                href: 'https://github.com/Ravid-A/CS2-SimpleAdmin/discussions',
               },
             ],
           },
@@ -152,11 +154,11 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/daffyyyy/CS2-SimpleAdmin',
+                href: 'https://github.com/Ravid-A/CS2-SimpleAdmin',
               },
               {
                 label: 'Releases',
-                href: 'https://github.com/daffyyyy/CS2-SimpleAdmin/releases',
+                href: 'https://github.com/Ravid-A/CS2-SimpleAdmin/releases',
               },
             ],
           },

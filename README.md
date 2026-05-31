@@ -1,15 +1,20 @@
 <p align="center">
-  <a href="https://github.com/daffyyyy/CS2-SimpleAdmin/actions/workflows/build.yml">
-    <img src="https://github.com/daffyyyy/CS2-SimpleAdmin/actions/workflows/build.yml/badge.svg" alt="Build and Publish" />
+  <a href="https://github.com/Ravid-A/CS2-SimpleAdmin/actions/workflows/build.yml">
+    <img src="https://github.com/Ravid-A/CS2-SimpleAdmin/actions/workflows/build.yml/badge.svg" alt="Build and Publish" />
   </a>
-<a href="https://github.com/daffyyyy/CS2-SimpleAdmin/releases/latest">
-  <img src="https://img.shields.io/github/v/release/daffyyyy/CS2-SimpleAdmin?color=orange" alt="GitHub Release" />
+<a href="https://github.com/Ravid-A/CS2-SimpleAdmin/releases/latest">
+  <img src="https://img.shields.io/github/v/release/Ravid-A/CS2-SimpleAdmin?color=orange" alt="GitHub Release" />
 </a>
   <img src="https://img.shields.io/badge/Made_with-a_lot_of_tea_%F0%9F%8D%B5-red" alt="Made with a lot of tea 🍵" />
 </p>
 
 [![Join the support Discord](https://img.shields.io/badge/Discord-Support-blue?logo=discord&logoColor=white)](https://discord.com/channels/1160907911501991946/1180627186865156126)
 # CS2-SimpleAdmin
+
+---
+
+> [!NOTE]
+> **Continued maintenance.** This is a community-maintained continuation of the original [daffyyyy/CS2-SimpleAdmin](https://github.com/daffyyyy/CS2-SimpleAdmin), which is no longer actively maintained by its original author. This fork carries on development with bug fixes, new features, and ongoing support. Contributions are welcome!
 
 ---
 
