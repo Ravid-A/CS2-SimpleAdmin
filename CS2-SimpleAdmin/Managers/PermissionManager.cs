@@ -677,4 +677,24 @@ public class PermissionManager(IDatabaseProvider? databaseProvider)
             CS2_SimpleAdmin._logger?.LogCritical("Unable to remove expired admins");
         }
     }
+
+    /// <summary>
+    /// Deletes orphaned admins that are not global and have no server assignments left.
+    /// </summary>
+    public async Task DeleteOrphanedAdmins()
+    {
+        if (databaseProvider == null) return;
+
+        try
+        {
+            await using var connection = await databaseProvider.CreateConnectionAsync();
+
+            var sql = databaseProvider.GetDeleteOrphanedAdminsQuery();
+            await connection.ExecuteAsync(sql);
+        }
+        catch (Exception)
+        {
+            CS2_SimpleAdmin._logger?.LogCritical("Unable to remove orphaned admins");
+        }
+    }
 }

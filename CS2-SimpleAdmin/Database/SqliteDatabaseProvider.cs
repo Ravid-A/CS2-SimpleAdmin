@@ -240,6 +240,9 @@ public class SqliteDatabaseProvider(string filePath) : IDatabaseProvider
 
     public string GetDeleteOldAdminsQuery() =>
         "DELETE FROM sa_admins WHERE ends IS NOT NULL AND ends <= @CurrentTime;";
+
+    public string GetDeleteOrphanedAdminsQuery() =>
+        "DELETE FROM sa_admins WHERE `global` = 0 AND id NOT IN (SELECT admin_id FROM sa_admins_servers);";
     
     public string GetAddMuteQuery(bool includePlayerName) =>
         includePlayerName

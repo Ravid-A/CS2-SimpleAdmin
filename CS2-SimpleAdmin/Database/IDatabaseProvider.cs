@@ -30,6 +30,7 @@ public interface IDatabaseProvider
     string GetAddGroupServerQuery();
     string GetDeleteGroupQuery();
     string GetDeleteOldAdminsQuery();
+    string GetDeleteOrphanedAdminsQuery();
     
     // BanManager
     string GetAddBanQuery();

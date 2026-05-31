@@ -306,7 +306,8 @@ internal class PlayerManager
                         pluginInstance.MuteManager.ExpireOldMutes(),
                         pluginInstance.WarnManager.ExpireOldWarns(),
                         pluginInstance.CacheManager?.RefreshCacheAsync() ?? Task.CompletedTask,
-                        pluginInstance.PermissionManager.DeleteOldAdmins()
+                        pluginInstance.PermissionManager.DeleteOldAdmins(),
+                        pluginInstance.PermissionManager.DeleteOrphanedAdmins()
                     };
 
                     await Task.WhenAll(expireTasks);
